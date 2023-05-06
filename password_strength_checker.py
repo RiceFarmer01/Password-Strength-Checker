@@ -3,6 +3,7 @@ import random
 import string
 import tkinter as tk
 from tkinter import ttk
+import webbrowser
 
 def calculate_entropy(password):
     char_set = set(password)
@@ -42,22 +43,24 @@ def set_random_password():
     password_var.set(strong_password)
     check_password_strength()
 
+def open_link(event):
+    webbrowser.open_new("https://github.com/RiceFarmer01")
+
 root = tk.Tk()
 root.title("Password Strength Checker")
 root.configure(bg='#333333')
 
 style = ttk.Style()
-style.theme_use('clam')
 style.configure('Custom.TFrame', background='#333333')
 style.configure('Custom.TLabel', background='#333333', foreground='white')
 style.configure('Custom.TCheckbutton', background='#333333', foreground='white')
 style.configure("Custom.TEntry", fieldbackground="#555555", foreground="white", bordercolor="#555555", darkcolor="#555555", lightcolor="#555555", relief="flat")
+style.configure("TButton", background="#555555", foreground="white")
+style.map("TButton",
+          background=[('active', '#666666'), ('pressed', '!disabled', '#444444')],
+          relief=[('pressed', 'sunken'), ('!disabled', 'raised')],
+          bordercolor=[('!disabled', '#555555')])
 
-style.configure("Custom.TButton", relief="flat", borderwidth=1, background="#555555", foreground="white")
-style.map("Custom.TButton",
-          background=[('!disabled', '#555555'), ('active', '#666666'), ('pressed', '#444444')],
-          foreground=[('!disabled', 'white')],
-          relief=[('!disabled', 'flat'), ('pressed', 'sunken')])
 
 mainframe = ttk.Frame(root, padding="10", style='Custom.TFrame')
 mainframe.grid(column=0, row=0, sticky=(tk.W, tk.E, tk.N, tk.S))
@@ -68,7 +71,6 @@ password_var = tk.StringVar()
 password_var.trace("w", check_password_strength)
 password_entry = ttk.Entry(mainframe, textvariable=password_var, font=("TkDefaultFont", 16), width=40, style="Custom.TEntry")
 password_entry.grid(column=2, row=1, sticky=(tk.W, tk.E), columnspan=5)
-
 length_label = ttk.Label(mainframe, text="Character Limit:", style='Custom.TLabel')
 length_label.grid(column=1, row=2, sticky=(tk.W, tk.E), padx=(0, 5))
 length_var = tk.StringVar(value='24')
@@ -88,7 +90,14 @@ generate_button = ttk.Button(mainframe, text="Generate Password", command=set_ra
 generate_button.grid(column=5, row=2, padx=(10, 0), sticky=(tk.W, tk.E))
 result_var = tk.StringVar()
 result_label = ttk.Label(mainframe, textvariable=result_var, style='Custom.TLabel')
-result_label.grid(column=1, row=3, columnspan=6, sticky=(tk.W, tk.E))
+result_label.grid(column=1, row=3, columnspan=6, sticky=(tk.W, tk.E), pady=(10, 0))
+
+bottom_frame = ttk.Frame(root, style='Custom.TFrame')
+bottom_frame.grid(column=0, row=1, sticky=(tk.W, tk.E, tk.S))
+
+made_by_label = tk.Label(bottom_frame, text="Made by jaiden", font=("TkDefaultFont", 10), fg="white", bg="#333333")
+made_by_label.pack(side="left", padx=10, pady=10)
+made_by_label.bind("<Button-1>", lambda e: webbrowser.open_new("https://github.com/RiceFarmer01"))
 
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
@@ -100,5 +109,6 @@ mainframe.columnconfigure(5, weight=1)
 mainframe.columnconfigure(6, weight=1)
 mainframe.rowconfigure(1, weight=1)
 mainframe.rowconfigure(2, weight=1)
+bottom_frame.columnconfigure(0, weight=1)
 
 root.mainloop()
