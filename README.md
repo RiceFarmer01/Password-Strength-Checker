@@ -8,5 +8,5 @@ This is a simple Python application that uses Tkinter to create a graphical inte
 2. Make sure you have Python 3 installed.
 3. Run `python password_strength_checker.py` to launch the application.
 4. Enter your password in the input field.
-5. The application will display the entropy and strength of the entered password.
+5. The application will display the entropy, strength and extimated cracking time of the entered or generated password.
 6. You can also generate a random password by specifying character length and choosing whether to use symbols or mixed case.
