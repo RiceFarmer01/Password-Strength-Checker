@@ -4,6 +4,8 @@ import string
 import tkinter as tk
 from tkinter import ttk
 import webbrowser
+import ctypes
+ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
 
 def calculate_entropy(password):
     char_set = set(password)
